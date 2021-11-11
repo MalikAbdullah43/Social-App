@@ -39,15 +39,14 @@ class LoginController extends Controller
     
      $user = DB::table('users')
      ->where('email',$req->email)->first();   //Data Checking From Database user Exist or Not
+     
+   
+    if(!empty($user->id)){
+        $password          = $user->password;  //Hashing Purpose
+        $user_data['id']   = $user->id;
+        $user_data['email']= $user->email;
     
-    
-    if($user){
-     $ps=$user->password;  //Hashing Purpose
- 
-        $user_data['id']=$user->id;
-        $user_data['email']=$user->email;
-    
-    if(Hash::check($req->password,$ps))  //If Password Match
+    if(Hash::check($req->password,$password ))  //If Password Match
     {     
         //For JWT Token Code
             $secret_key="Malik$43";
@@ -56,6 +55,7 @@ class LoginController extends Controller
             $nbf = $iat+10; 
             $exp = $iat+1800; 
             $aud = "user"; 
+
             $payload_info= array(
                 "iss" =>$iss,
                 "iat" =>$iat, 
@@ -72,12 +72,12 @@ class LoginController extends Controller
                     ->whereNotNull('email_verified_at')   //Checking if user Email Verify or Not
                     ->where('status',1)
                     ->get();
-
+                    
                     $count = Count($sql);
 
             if($count)  //If Verify Then This Code Execute
             {
-              
+                
                 $Auth_key = JWT::encode($payload_info,$secret_key);     //JWT Updation And Printing Message of Log in
                 $user = DB::table('users')
                 ->where('email',$req->email)
@@ -99,6 +99,7 @@ class LoginController extends Controller
 
             else
             {
+               
                 return response(["Message"=>"Credentials Not Matched","Status"=>"404"],404); //If User Input Not Match Then Through This Message
             } 
         }

@@ -19,19 +19,19 @@ class SignupController extends Controller
       $req->validated();
 
      //Here We Create Instance of User Model For Passing Values in Model
-        $result = $req->file('image')->store('apidoc');
+        $results = $req->file('image')->store('apidoc');
         $email = $req->email;
-        $user = new User([
+        $users = new User([
            'name'     => $req->name,
            'email'    => $req->email,
            'password' => Hash::make($req->password),
            'gender'   => $req->gender,
-           'image'    =>  $result,
+           'image'    =>  $results,
            
         ]);
 
         //Here We save Data in Database if Not Any Error Ocuure
-        if($user->save())
+        if($users->save())
         {
 
         //Send Mail New Registered 

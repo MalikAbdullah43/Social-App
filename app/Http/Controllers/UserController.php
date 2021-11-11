@@ -45,7 +45,7 @@ class UserController extends Controller
  }
 
 
-      public function log_out(Request $req)
+      public function logOut(Request $req)
       {
         $jwt = $req->bearerToken();
         $sql = DB::table('users')->where('remember_token',$jwt)->update(['remember_token'=>'']);
@@ -58,7 +58,7 @@ class UserController extends Controller
          
       }
 
-      public function UserPosts(Request $request){
+      public function userPosts(Request $request){
         
         $token=request()->bearerToken();
         $secret_key="Malik$43";

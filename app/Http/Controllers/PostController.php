@@ -10,7 +10,7 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
-    public function post_create(Request $req)
+    public function postCreate(Request $req)
     {
         
         $token=request()->bearerToken();
@@ -21,7 +21,19 @@ class PostController extends Controller
         $post->text=$req->text;
         $post->access=$req->acess;
         $post->user_id=$decoded->data->id;
+        if(!empty($req->file('file'))){
+            $result = $req->file('file')->store('userposts');
+            $post->file=$result;
+        }
+        
         $post->save();
-        return "ok";
+        if(!empty($post))
+        return response(["Message"=>"Successfully Created Posts","Status"=>"200"],200);
+        else
+        return response(["Message"=>"Error Occure in Post Create Posts","Status"=>"404"],404);
+    }
+    public function postUpdate(Request $req)
+    {
+
     }
 }

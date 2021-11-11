@@ -15,16 +15,17 @@ use App\Http\Middleware\UpdateValidation;
 
 Route::get('verification/{email}',[MailVerify::class,"verify"]);                        //Link Verification Route
 Route::get('regenrate/{email}',[MailVerify::class,"regenrate_link"]);                   //Verirfy Link Re Create Route
-Route::post('login',[LoginController::class,"login"]);                                 //Login Route
+Route::post('login',[LoginController::class,"logIn"]);                                 //Login Route
 
-Route::post('signup',[SignupController::class,"signup"]);          //Sign Up Route
+Route::post('signup',[SignupController::class,"signUp"]);          //Sign Up Route
 
 
 Route::middleware(['verify'])->group(function(){
-    Route::post('logout',[UserController::class,"log_out"]);    //Log Out Route
-    Route::post('postcreate',[PostController::class,"post_create"]);  //Post Create
-    Route::get('UserPosts',[UserController::class,"UserPosts"]); //Post Create
+    Route::post('logout',[UserController::class,"logOut"]);    //Log Out Route
+    Route::post('postcreate',[PostController::class,"postCreate"]);  //Post Create
+    Route::get('UserPosts',[UserController::class,"userPosts"]); //Post Create
     Route::post('uedit',[UserController::class,"edit"]);
+    Route::post('postupdate',[PostController::class,"postUpdate"]);  //Post Update
 });
 
 
