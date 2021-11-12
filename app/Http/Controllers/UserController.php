@@ -58,14 +58,6 @@ class UserController extends Controller
          
       }
 
-      public function userPosts(Request $request){
-        
-        $token=request()->bearerToken();
-        $secret_key="Malik$43";
-        $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
-        $user=User::with('All_Post')->where('id',$decoded->data->id)->get();
-        return response($user[0]->All_Post);
-  
-      }
+     
    
 }

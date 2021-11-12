@@ -12,20 +12,22 @@ use App\Http\Middleware\Validation;
 use App\Http\Middleware\UpdateValidation;
 
 
-
+//User Routes
 Route::get('verification/{email}',[MailVerify::class,"verify"]);                        //Link Verification Route
 Route::get('regenrate/{email}',[MailVerify::class,"regenrate_link"]);                   //Verirfy Link Re Create Route
 Route::post('login',[LoginController::class,"logIn"]);                                 //Login Route
-
 Route::post('signup',[SignupController::class,"signUp"]);          //Sign Up Route
 
 
 Route::middleware(['verify'])->group(function(){
+    //User Routes
     Route::post('logout',[UserController::class,"logOut"]);    //Log Out Route
-    Route::post('postcreate',[PostController::class,"postCreate"]);  //Post Create
-    Route::get('UserPosts',[UserController::class,"userPosts"]); //Post Create
     Route::post('uedit',[UserController::class,"edit"]);
-    Route::post('postupdate',[PostController::class,"postUpdate"]);  //Post Update
+    //Post Routes
+    Route::post('postcreate',[PostController::class,"postCreate"]);  //Post Create
+    Route::get('UserPosts',[PostController::class,"userPosts"]); //Post Create
+    Route::post('postupdate/{pid}',[PostController::class,"postUpdate"]);  //Post Update
+    Route::get('postdelete/{pid}',[PostController::class,"postDelete"]);  //Post Delete
 });
 
 

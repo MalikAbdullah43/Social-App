@@ -15,8 +15,10 @@ class CreatePostsTable extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->boolean('access');
+            $table->boolean('access')->default(1);  //1:Public 0:Private
+            $table->string('text');
             $table->string('file');
+            $table->softDeletes();  //Delete colunm
             $table->bigInteger('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
