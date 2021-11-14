@@ -42,7 +42,7 @@ class CommentController extends Controller
         $access = DB::table('posts')->where(['id'=>$req->postId,'access'=>1])->whereNull('deleted_at')->get();
         $count = Count($access);
        
-        if($count>0)    //If Post Is Public Then Just Friends Comments on Post
+        if($count>0)    //If Post Is Public And Not Deleted Then Just Friends Comments on Post
         {
             $user   = $decoded->data->id;
             $friends = $access[0]->user_id;
@@ -86,7 +86,7 @@ class CommentController extends Controller
             }
            
             }
-            else{
+            else{  //If user Not a Friend Then Generate a Error
                    return response(["Message"=>"This Post Not Exist","Status"=>"404"],404);
             }
             
@@ -100,8 +100,31 @@ class CommentController extends Controller
     
 
   }
-   public function deleteComment()
+   public function commentDelete(Request $req)
    {
+      $token=request()->bearerToken();
+       $secret_key="Malik$43";
+       $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
+       $user = $decoded->data->id;
+    
+       $cid=$req->cid;
+       $pid=$req->pid;
+       $select = DB::table('comments')->where(["id"=>$cid,'user_id'=> $user,'post_id'=> $pid])->whereNull('deleted_at')->get();
+    
+       $count = Count($select);
+     
+        if($count>0)
+        {
+        $delete =  Comment::find(17)->delete();
+
+         if($delete)
+          return response(["Message"=>"Successfully Post Delete","Status"=>"200"],200);
+          else
+          return response(["Message"=>"Error Occure in Comment Delete","Status"=>"500"],500);
+        }
+        else
+        return response(["Message"=>"Comment Not Exist","Status"=>"404"],404);
+         
 
    } 
         

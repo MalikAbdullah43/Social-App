@@ -37,6 +37,7 @@ Route::middleware(['verify'])->group(function(){
     Route::post('search',[PostController::class,"postSearch"]);  //Post Search
     //Comment Routes
     Route::post('comment',[CommentController::class,"commentCreate"]);  //Comment Create
+    Route::get('comment/delete/{cid}/{pid}',[CommentController::class,"commentDelete"]);  //Comment Delete
     //Friend Routes
     Route::post('/friend', [FriendController::class,"addFriends"]);
     Route::get('/friendlist', [FriendController::class,"showFriends"]);

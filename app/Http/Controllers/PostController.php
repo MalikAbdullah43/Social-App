@@ -8,6 +8,7 @@ use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
@@ -95,19 +96,26 @@ class PostController extends Controller
     //This Function For Delete Post
     public function postDelete(Request $req)
     {
-         $postId = Post::find($req->pid);
-         if(!empty($postId->id)){
-            $id=$postId->id;
+           $token=request()->bearerToken();
+           $secret_key="Malik$43";
+           $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
+           $user = $decoded->data->id;
+          
+         
+            $id=$req->pid;
+            $allow = DB::table('posts')->where(['id'=>$id,'user_id'=>$user])->get();
+            $count=Count($allow);
+            if($count>0){
             $delete =  Post::find($id)->delete();
             if($delete)
                return response(["Message"=>"Successfully Post Delete","Status"=>"200"],200);
                else
                return response(["Message"=>"Error Occure in Post Delete","Status"=>"500"],500);
-         }
+            }
      
       
-      else
-      return response(["Message"=>"Post Not Found","Status"=>"404"],404);
+       else
+       return response(["Message"=>"Post Not Found","Status"=>"404"],404);
     } 
     //Post Search
     public function postSearch(Request $request){
