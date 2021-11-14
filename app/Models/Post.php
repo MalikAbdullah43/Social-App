@@ -45,9 +45,13 @@ class Post extends Model
         'access' =>'1',
     ];
 
-
-    public function User(){
+//Relationship With User
+    public function Users(){
         return $this->belongsTo(User::class);
+    }
+  //  Relationship With Comment
+    public function comments(){
+        return $this->hasMany(Comment::class);
     }
 
 }

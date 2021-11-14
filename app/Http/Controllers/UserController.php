@@ -2,11 +2,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\mail;
 use App\Models\User;
+use App\Mail\PasswordMail;
 use Illuminate\Support\Facades\DB;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\ForgetPasswordRequest;
 
 header('content-type: application/json');
 
@@ -58,6 +61,31 @@ class UserController extends Controller
          
       }
 
-     
+     public function forgetPassword(ForgetPasswordRequest $req)
+     {
+      $req->validated(); 
+      $otp = rand(111111,999999);
+      $user = DB::table('users')
+      ->where('email', $req->email)->update(["otp"=>$otp,'updated_at' => now()->addMinutes(15)]);  //Token Validity Increase if All Activity Perfoam And Message Show
+      if(self::mail($req->email,$otp)){
+      return response([
+          "Message"=>"Otp Send On Email","Status"=>"200"],200
+       );
+      }
+      
+     }
+
+     public function mail($email,$otp)
+{
+    $details = ['title'=>'Hello Dear User',
+                'Message'=>'This is  Your Otp:'.$otp,
+];
+               
+
+                Mail::to('malikabdullah4300@gmail.com')->send(new PasswordMail($details));
+                return "Email Send";
+            
+}
+
    
 }

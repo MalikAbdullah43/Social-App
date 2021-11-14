@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\MailVerify;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Middleware\UserVerify;
 use App\Http\Middleware\Validation;
@@ -18,6 +19,9 @@ Route::get('verification/{email}',[MailVerify::class,"verify"]);                
 Route::get('regenrate/{email}',[MailVerify::class,"regenrate_link"]);                   //Verirfy Link Re Create Route
 Route::post('login',[LoginController::class,"logIn"]);                                 //Login Route
 Route::post('signup',[SignupController::class,"signUp"]);          //Sign Up Route
+//Password Routes
+Route::post('forgetpassword',[UserController::class,"forgetPassword"]);          //Forget Route
+Route::post('resetpassword',[UserController::class,"passwordReset"]);          //Password Reset Route
 
 
 Route::middleware(['verify'])->group(function(){
@@ -31,11 +35,11 @@ Route::middleware(['verify'])->group(function(){
     Route::get('postdelete/{pid}',[PostController::class,"postDelete"]);  //Post Delete
     Route::post('search',[PostController::class,"postSearch"]);  //Post Search
     //Comment Routes
-    Route::post('commentcreate/{postid}',[PostController::class,"commentCreate"]);  //Comment Create
+    Route::post('comment',[CommentController::class,"commentCreate"]);  //Comment Create
     //Friend Routes
     Route::post('/friend', [FriendController::class,"addFriends"]);
     Route::get('/friendlist', [FriendController::class,"showFriends"]);
-    Route::post('/friend/remove', [FriendController::class,"remove"]);
+    Route::post('/friend/remove/', [FriendController::class,"remove"]);
     Route::post('/request', 'FriendController@request');
 });
 

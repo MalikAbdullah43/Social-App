@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateCommentRequest extends FormRequest
+class ForgetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class CreateCommentRequest extends FormRequest
     public function rules()
     {
         return [
-            'comment' => 'required|string|max:50',
-            'postId' => 'exists:posts,id|numeric',
-            'image'=>'mimes:png,jpg,jpeg,gif|max:2305',
-
+            'email' => 'required|string| email|exists:users,email',
         ];
     }
 }

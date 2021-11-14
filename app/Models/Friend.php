@@ -17,10 +17,10 @@ class Friend extends Model
         'deleted_at',
     ];
   //  use SoftDeletes;
-    public function user() {
+    public function users() {
         return $this->belongsTo(User::class);
     }
-    public function friend(){
+    public function friends(){
         return $this->belongsTo(User::class);
     }
 

@@ -42,4 +42,10 @@ class Comment extends Model
         'file' => 'NULL',
         'access' =>'1',
     ];
+     public function users() {
+         return $this->belongsTo(User::class);
+     }
+     public function posts() {
+         return $this->belongsTo(Post::class);
+     }
 }
