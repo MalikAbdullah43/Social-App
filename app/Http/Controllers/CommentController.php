@@ -22,7 +22,7 @@ class CommentController extends Controller
         //End
         //If User Want To Post Comment Own Post Then They Directly Post With No Restrictions
         $id  = $decoded->data->id;
-        $ownPost = DB::table('posts')->where('user_id',$id)->get();
+        $ownPost = DB::table('posts')->where(['user_id'=>$id,'id'=>$req->postId])->whereNull('deleted_at')->get();
         $count = Count($ownPost);
         if($count>0)
         {
@@ -39,8 +39,7 @@ class CommentController extends Controller
         }
         ///User Own Post End
         //Check Other Conditions
-        else{
-        $access = DB::table('posts')->where('id',$req->postId)->where('access',1)->get();
+        $access = DB::table('posts')->where(['id'=>$req->postId,'access'=>1])->whereNull('deleted_at')->get();
         $count = Count($access);
        
         if($count>0)    //If Post Is Public Then Just Friends Comments on Post
@@ -94,13 +93,16 @@ class CommentController extends Controller
 
 
         }
+        else{
+            return response(["Message"=>"This Post Not Exist","Status"=>"404"],404);
+     }
          
-    }
+    
 
   }
    public function deleteComment()
    {
-       
+
    } 
         
 
