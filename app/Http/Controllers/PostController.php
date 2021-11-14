@@ -109,5 +109,23 @@ class PostController extends Controller
       else
       return response(["Message"=>"Post Not Found","Status"=>"404"],404);
     } 
+    //Post Search
+    public function postSearch(Request $request){
+        // Get the search value from the request
+        $search = $request->search;
+    
+        // Search in the title and body columns from the posts table
+        $posts = Post::query()
+            ->where('text', 'LIKE', "%{$search}%")->Where('access',1)
+            ->get();
+        $count = Count($posts);
+        // Return the search with the resluts
+        if($count>0)    
+        return response($posts);
+        // // Return the if Not Found Any Post
+        else 
+        return response(["Message"=>"Result Not Found","Status"=>"404"],404);       
+        
+    }
 
 }

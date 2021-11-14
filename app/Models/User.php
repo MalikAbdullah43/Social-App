@@ -54,4 +54,11 @@ class User extends Authenticatable
     public function Post(){
         return $this->hasMany(Post::class);
     }
+    //FriendShip Relationships
+    public function user() {
+        return $this->hasMany(Friend::class);
+    }
+    public function friend() {
+        return $this->hasMany(Friend::class);
+    }
 }

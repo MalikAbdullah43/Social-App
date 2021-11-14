@@ -10,6 +10,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Middleware\UserVerify;
 use App\Http\Middleware\Validation;
 use App\Http\Middleware\UpdateValidation;
+use App\Http\Controllers\FriendController;
 
 
 //User Routes
@@ -28,6 +29,14 @@ Route::middleware(['verify'])->group(function(){
     Route::get('UserPosts',[PostController::class,"userPosts"]); //Post Create
     Route::post('postupdate/{pid}',[PostController::class,"postUpdate"]);  //Post Update
     Route::get('postdelete/{pid}',[PostController::class,"postDelete"]);  //Post Delete
+    Route::post('search',[PostController::class,"postSearch"]);  //Post Search
+    //Comment Routes
+    Route::post('commentcreate/{postid}',[PostController::class,"commentCreate"]);  //Comment Create
+    //Friend Routes
+    Route::post('/friend', [FriendController::class,"addFriends"]);
+    Route::get('/friendlist', [FriendController::class,"showFriends"]);
+    Route::post('/friend/remove', [FriendController::class,"remove"]);
+    Route::post('/request', 'FriendController@request');
 });
 
 
