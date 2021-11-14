@@ -49,7 +49,7 @@ class Post extends Model
     public function Users(){
         return $this->belongsTo(User::class);
     }
-  //  Relationship With Comment
+  // Relationship With Comment
     public function comments(){
         return $this->hasMany(Comment::class);
     }

@@ -43,9 +43,9 @@ class Comment extends Model
         'access' =>'1',
     ];
      public function users() {
-         return $this->belongsTo(User::class);
+         return $this->belongsto(user::class);
      }
      public function posts() {
-         return $this->belongsTo(Post::class);
+         return $this->belongsto(post::class);
      }
 }

@@ -8,6 +8,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\SignupController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\PasswordController;
 use App\Http\Middleware\UserVerify;
 use App\Http\Middleware\Validation;
 use App\Http\Middleware\UpdateValidation;
@@ -20,8 +21,8 @@ Route::get('regenrate/{email}',[MailVerify::class,"regenrate_link"]);           
 Route::post('login',[LoginController::class,"logIn"]);                                 //Login Route
 Route::post('signup',[SignupController::class,"signUp"]);          //Sign Up Route
 //Password Routes
-Route::post('forgetpassword',[UserController::class,"forgetPassword"]);          //Forget Route
-Route::post('resetpassword',[UserController::class,"passwordReset"]);          //Password Reset Route
+Route::post('forgetpassword',[PasswordController::class,"forgetPassword"]);          //Forget Route
+
 
 
 Route::middleware(['verify'])->group(function(){
@@ -41,6 +42,8 @@ Route::middleware(['verify'])->group(function(){
     Route::get('/friendlist', [FriendController::class,"showFriends"]);
     Route::post('/friend/remove/', [FriendController::class,"remove"]);
     Route::post('/request', 'FriendController@request');
+    //Password Reset Request Identify
+    Route::post('resetpassword',[PasswordController::class,"passwordReset"]);          //Password Reset Route
 });
 
 

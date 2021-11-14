@@ -7,7 +7,7 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>This Mail Send For Password Reset Password Easily</h1>
+    <h1>This Mail Send For Password Reset Easily</h1>
     <h2>{{$details['title']}}</h2>
     <h2>{{$details['Message']}}</h2>
     <h3>Thank You</h3>
