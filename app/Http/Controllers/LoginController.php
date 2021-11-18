@@ -14,6 +14,8 @@ use App\Mail\LoginMail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\LoginRequest;
+use MongoDB\Client as test;
+
 
 class LoginController extends Controller
 {
@@ -34,6 +36,7 @@ class LoginController extends Controller
 //Log In Function Call
 
      public function logIn(LoginRequest $req){
+    $collection = (new test())->socialapp->user;
 
     $req->validated();
     
@@ -114,3 +117,4 @@ class LoginController extends Controller
 
 
 }
+

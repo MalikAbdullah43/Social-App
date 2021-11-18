@@ -2,12 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\MailVerify;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SignupController;
 use App\Http\Controllers\CommentController;
-use App\Http\Controllers\PasswordController;
 use App\Http\Middleware\UserVerify;
 use App\Http\Middleware\Validation;
 use App\Http\Middleware\UpdateValidation;

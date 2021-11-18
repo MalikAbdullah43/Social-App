@@ -17,7 +17,6 @@ class Validation
      */
     public function handle(Request $req, Closure $next)
     {
-        die("hello");
         $validator = Validator::make($req->all(),[ 
             'name'    => 'required|string',
             'email'   => 'required|email|unique:users,email,',
