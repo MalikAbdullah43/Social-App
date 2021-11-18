@@ -16,7 +16,7 @@ class Friend extends Model
         'updated_at',
         'deleted_at',
     ];
-  //  use SoftDeletes;
+  //  use SoftDeletes;z
     public function users() {
         return $this->belongsTo(User::class);
     }

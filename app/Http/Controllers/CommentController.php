@@ -124,10 +124,14 @@ class CommentController extends Controller
         }
         else
         return response(["Message"=>"Comment Not Exist","Status"=>"404"],404);
-         
-
    } 
         
+   public function postComments(Request $req)
+   {
+        $pId = $req->pid;
+        $post = DB::table('comments')->select('id','comment','file','user_id as user')->where('post_id',$pId)->get();
+        return response($post);
+   }
 
 
 

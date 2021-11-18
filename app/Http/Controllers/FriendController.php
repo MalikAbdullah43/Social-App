@@ -54,7 +54,7 @@ class FriendController extends Controller
         $secret_key="Malik$43";
         $token=request()->bearerToken();
         $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
-        $user=User::with('friend')->where('id',$decoded->data->id)->get();
+        $user=User::with('friends')->where('id',$decoded->data->id)->get();
         return response($user);
     }
 

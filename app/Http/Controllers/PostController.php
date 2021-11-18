@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use App\Models\Post;
+use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PostRequest;
@@ -47,13 +48,9 @@ class PostController extends Controller
         $secret_key="Malik$43";
         $decoded = JWT::decode($token, new Key($secret_key, 'HS256'));
         $user=User::with('Post')->where('id',$decoded->data->id)->get();
-        return response($user[0]->Post);
-      //  $arrays[] =  (array) $red;
-
-        
-       // else
-        //return response(["Message"=>"Post Not Found","Status"=>"404",],404);
-
+  
+        $post = DB::table('comments')->select('id','comment','file','user_id as user')->where('post_id',$user[0]->post[0]->id)->get();
+        return response(["Post"=>$user[0]->Post]);//,"Comments"=>$post[0]->Comment]);
   
       }
       //This Function For User Which Post User Want to Update
